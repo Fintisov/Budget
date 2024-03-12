@@ -1,18 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <BudgetList :list='list' />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BudgetList from "@/components/BudgetList.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    BudgetList
+  },
+  data: () => ({
+    /*list: {
+      1: {
+        type: 'INCOME',
+        value: 100,
+        comment: 'Some comment',
+        id: 1
+      },
+      2: {
+        type: 'OUTCOME',
+        value: -50,
+        comment: 'Some outcome comment',
+        id: 2
+      }
+    }*/
+  })
 }
 </script>
+
+
 
 <style>
 #app {
@@ -22,5 +39,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 }
 </style>
