@@ -12,29 +12,31 @@
       </template>
       <template v-else>
         <ul class="budget-list">
-          <li class="budget-list__item"
-              v-for="(item, index) in list" :key="index"
+          <li
+              class="budget-list__item"
+              v-for="(item, index) in list"
+              :key="index"
           >
             <p class="budget-list__text">{{ item.comment }} <b>{{ item.value }}</b></p>
-            {{ isEmptyList }}
-            <el-button type="danger" plain>Delete</el-button>
+
+            <el-button
+                @click="$emit('deleteItem', index)"
+                type="danger"
+                plain
+            >
+              Delete
+            </el-button>
           </li>
         </ul>
       </template>
     </el-card>
   </div>
-
 </template>
 
 <script>
 export default {
   name: "BudgetList",
-  props: {
-    list: {
-      type: Object,
-      default: () => ({})
-    }
-  },
+  emits: ['deleteItem'],
   data: () => ({
     header: 'Budget header',
   }),
@@ -43,11 +45,20 @@ export default {
       closable: false
     }
   }),
+  props: {
+    list: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   computed: {
     isEmptyList() {
       return !Object.keys(this.list).length
     }
-  }
+  },
+  methods: ({
+
+  })
 }
 </script>
 

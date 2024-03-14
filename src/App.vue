@@ -1,6 +1,9 @@
 <template>
   <TotalBalance :total='totalBalance'/>
-  <BudgetList :list='list'/>
+  <BudgetList
+      :list='list'
+      @delete-item="deleteListItem"
+  />
 </template>
 
 <script>
@@ -29,7 +32,6 @@ export default {
       }
     }
   }),
-
   computed: {
     totalBalance() {
       let total = 0;
@@ -41,7 +43,12 @@ export default {
 
       return total
     }
-  }
+  },
+  methods: ({
+    deleteListItem(value) {
+      delete this.list[value]
+    }
+  })
 }
 </script>
 
