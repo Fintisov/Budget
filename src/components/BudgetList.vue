@@ -15,9 +15,7 @@
           <li class="budget-list__item"
               v-for="(item, index) in list" :key="index"
           >
-            <p class="budget-list__text">
-              {{ item.comment }} <b>{{ item.value }}</b>
-            </p>
+            <p class="budget-list__text">{{ item.comment }} <b>{{ item.value }}</b></p>
             {{ isEmptyList }}
             <el-button type="danger" plain>Delete</el-button>
           </li>
