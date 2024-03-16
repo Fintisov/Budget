@@ -1,20 +1,20 @@
 <template>
+  <FormItem @submit-form="addNewFiledToList"/>
   <TotalBalance :total='totalBalance'/>
-  <BudgetList
-      :list='list'
-      @delete-item="deleteListItem"
-  />
+  <BudgetList :list='list' @delete-item="onDeleteListItem"/>
 </template>
 
 <script>
 import BudgetList from "@/components/BudgetList.vue";
 import TotalBalance from "@/components/TotalBalance.vue";
+import FormItem from "@/components/FormItem.vue";
 
 export default {
   name: 'App',
   components: {
     BudgetList,
-    TotalBalance
+    TotalBalance,
+    FormItem,
   },
   data: () => ({
     list: {
@@ -30,7 +30,7 @@ export default {
         comment: 'Some outcome comment',
         id: 2
       }
-    }
+    },
   }),
   computed: {
     totalBalance() {
@@ -45,8 +45,33 @@ export default {
     }
   },
   methods: ({
-    deleteListItem(value) {
+    onDeleteListItem(value) {
       delete this.list[value]
+    },
+
+    addNewFiledToList(dataForm) {
+      const MAX_NUMBER_ID = 10;
+      const createId = () => Math.floor(Math.random() * MAX_NUMBER_ID);
+      let newId = createId();
+      const idList = Object.keys(this.list);
+
+      console.log(dataForm)
+
+      // Check max length
+      if (idList.length >= MAX_NUMBER_ID) {
+        alert('max length');
+        return;
+      }
+
+      // Check free id in the list
+      while (idList.includes(`${newId}`)) {
+        newId = createId();
+      }
+
+      this.list[newId] = {
+        ...dataForm,
+        id: newId
+      };
     }
   })
 }
