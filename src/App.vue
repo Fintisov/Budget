@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import BudgetList from "@/components/BudgetList.vue";
-import TotalBalance from "@/components/TotalBalance.vue";
-import FormItem from "@/components/FormItem.vue";
+import BudgetList from '@/components/BudgetList.vue';
+import TotalBalance from '@/components/TotalBalance.vue';
+import FormItem from '@/components/FormItem.vue';
 
 export default {
   name: 'App',
@@ -22,14 +22,14 @@ export default {
         type: 'INCOME',
         value: 100,
         comment: 'Some comment',
-        id: 1
+        id: 1,
       },
       2: {
         type: 'OUTCOME',
         value: -50,
         comment: 'Some outcome comment',
-        id: 2
-      }
+        id: 2,
+      },
     },
   }),
   computed: {
@@ -38,24 +38,22 @@ export default {
       const valueList = Object.values(this.list);
 
       total = valueList.reduce((acc, item) => {
-        return acc + item.value
-      }, 0)
+        return acc + item.value;
+      }, 0);
 
-      return total
-    }
+      return total;
+    },
   },
   methods: ({
     onDeleteListItem(value) {
-      delete this.list[value]
+      delete this.list[value];
     },
 
     addNewFiledToList(dataForm) {
-      const MAX_NUMBER_ID = 10;
+      const MAX_NUMBER_ID = 100;
       const createId = () => Math.floor(Math.random() * MAX_NUMBER_ID);
       let newId = createId();
       const idList = Object.keys(this.list);
-
-      console.log(dataForm)
 
       // Check max length
       if (idList.length >= MAX_NUMBER_ID) {
@@ -70,11 +68,11 @@ export default {
 
       this.list[newId] = {
         ...dataForm,
-        id: newId
+        id: newId,
       };
-    }
-  })
-}
+    },
+  }),
+};
 </script>
 
 

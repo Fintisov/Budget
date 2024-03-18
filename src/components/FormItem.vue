@@ -11,8 +11,8 @@
             v-model="formData.type"
             placeholder="please select type"
         >
-          <el-option label="Income" value="income"/>
-          <el-option label="Outcome" value="outcome"/>
+          <el-option label="INCOME" value="income"/>
+          <el-option label="OUTCOME" value="outcome"/>
         </el-select>
       </el-form-item>
 
@@ -38,35 +38,49 @@ export default {
   emits: ['submitForm'],
   data: () => ({
     formData: {
-      type: 'INCOME',
+      type: 'income',
       comment: '',
-      value: 0
+      value: 0,
     },
     rules: {
       type: [{required: true, message: 'Please select type', trigger: 'blur'}],
-      comment: [{required: true, message: 'Please input comment', trigger: 'change',}],
+      comment: [{required: true, message: 'Please input comment', trigger: 'change'}],
       value: [
-        {required: true, message: 'Please input comment', trigger: 'change',},
-        {type: 'number', message: 'Type in the input must be number', trigger: 'change',}
-      ]
-    }
+        {required: true, message: 'Please input comment', trigger: 'change'},
+        {type: 'number', message: 'Type in the input must be number', trigger: 'change'},
+      ],
+    },
   }),
   methods: ({
     async onSubmit() {
       const form = this.$refs.formRef;
+
       await form.validate((isValid, fields) => {
         if (isValid) {
+          const getTypeValue = this.formData.type.toLowerCase();
+
+          switch (getTypeValue) {
+            case 'income':
+              this.formData.value = Math.abs(this.formData.value);
+              break;
+            case 'outcome':
+              this.formData.value = this.formData.value * -1;
+              break;
+          }
+
           this.$emit('submitForm', {...this.formData});
+          form.resetFields();
+
         } else {
-          console.log("Error: ",fields)
+          console.log('Error: ', fields);
         }
       });
-
     },
     resetForm() {
-    }
-  })
-}
+      this.$refs.formRef.resetFields();
+    },
+  }),
+};
 </script>
 
 <style scoped>
